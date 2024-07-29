@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DanhMucController;
+use App\Http\Controllers\Admin\NguoiDungController;
 use App\Http\Controllers\Admin\SanPhamController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
@@ -27,10 +28,16 @@ Route::get('/category/{id}',[ProductController::class, 'cate'])->name('cate');
 // Route::get('/search', [ProductController::class, 'search'])->name('search');
 Route::post('/search', [ProductController::class, 'search'])->name('search');
 
+// bình luận 
+Route::post('/comment/{san_pham_id}',[ProductController::class, 'postComment'])->name('comment');
 // Giỏ hàng 
 Route::get('/list-cart', [CartController::class, 'listCart'])->name('cart.listCart');
 Route::post('/add-to-cart', [CartController::class, 'addCart'])->name('cart.addCart');
 Route::post('/update-cart', [CartController::class, 'updateCart'])->name('cart.updateCart');
+
+// contact
+Route::get('/contact', [ProductController::class, 'contact'])->name('contact');
+Route::post('/contact',[ProductController::class, 'senMail'])->name('senMail');
 
 
 // đăng nhập đăng ký
@@ -69,5 +76,17 @@ Route::middleware(['auth', 'auth.admin'])
             Route::get('/{id}/edit', [SanPhamController::class, 'edit'])->name('edit');
             Route::put('/{id}/update', [SanPhamController::class, 'update'])->name('update');
             Route::delete('/{id}/destroy', [SanPhamController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('nguoidungs')
+        ->as('nguoidungs.')
+        ->group(function(){
+            Route::get('/', [NguoiDungController::class, 'index'])->name('index');
+            Route::get('/create', [NguoiDungController::class, 'create'])->name('create');
+            Route::post('/store', [NguoiDungController::class, 'store'])->name('store');
+            Route::get('/show/{id}', [NguoiDungController::class, 'show'])->name('show');
+            Route::get('/{id}/edit', [NguoiDungController::class, 'edit'])->name('edit');
+            Route::put('/{id}/update', [NguoiDungController::class, 'update'])->name('update');
+            Route::delete('/{id}/destroy', [NguoiDungController::class, 'destroy'])->name('destroy');
         });
     });

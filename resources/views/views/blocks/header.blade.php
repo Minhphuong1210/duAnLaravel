@@ -90,7 +90,7 @@
 
                                             </ul>
                                         </li>
-                                        <li><a href="contact-us.html">Contact us</a></li>
+                                        <li><a href="{{route('contact')}}">Contact us</a></li>
                                     </ul>
                                 </nav>
                                 <!-- main menu navbar end -->

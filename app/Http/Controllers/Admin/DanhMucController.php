@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DanhMucRequest;
+use App\Http\Requests\UpdateDanhMucRequest;
 use App\Models\DanhMuc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -72,7 +73,7 @@ class DanhMucController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateDanhMucRequest $request, string $id)
     {
         if ($request->isMethod('PUT')) {
             $param = $request->except('_token', '_method');

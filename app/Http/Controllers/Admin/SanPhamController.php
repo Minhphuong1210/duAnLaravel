@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SanPhamRequest;
+use App\Http\Requests\UpdateSanPhamRequest;
 use App\Models\DanhMuc;
 use App\Models\HinhAnhSanPham;
 use App\Models\SanPham;
@@ -93,7 +94,7 @@ class SanPhamController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateSanPhamRequest $request, string $id)
     {
         if ($request->isMethod('PUT')) {
             $params = $request->except('_token', '_method');

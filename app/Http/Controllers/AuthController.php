@@ -23,7 +23,7 @@ class AuthController extends Controller
 //    $request->password;
     if (Auth::attempt($user)) {
         // dd(Auth::user());
-        return redirect()->intended('trangChu');
+        return redirect()->intended('/');
     }
         return redirect()->back()->with('Email','sai địa chỉ email');
     }

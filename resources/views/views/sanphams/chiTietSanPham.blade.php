@@ -134,87 +134,91 @@
                                         </li>
 
                                         <li>
-                                            <a data-bs-toggle="tab" href="#tab_three">reviews (1)</a>
+                                            <a data-bs-toggle="tab" href="#tab_three">reviews ({{$count_comment}})</a>
                                         </li>
                                     </ul>
                                     <div class="tab-content reviews-tab">
+
+
+                                        @if (Auth::check())
+                                            <div class="tab-pane fade" id="tab_three">
+
+                                                @if (session('success'))
+                                                    <div class="alert alert-success">
+                                                        {{ session('success') }}
+                                                    </div>
+                                                @endif
+
+                                                @if (session('error'))
+                                                <div class="alert alert-success">
+                                                    {{ session('error') }}
+                                                </div>
+                                            @endif
+                                                <form action="{{ route('comment', ['san_pham_id' => $sanPham->id]) }}"
+                                                    class="review-form" method="POST">
+
+
+                                                    @csrf
+                                                    <h5>{{$count_comment}} review for  <span> {{ $sanPham->ten_san_pham }}</span></h5>
+                                                  <div class="total-reviews">
+                                                       
+                                                    @foreach ($comment as $item)
+                                                    <div class="review-box">
+                                                      <div class="post-author">
+                                                          <p><span>{{$item->user->name}}</span> Ngày {{$item->created_at->format('d/mY')}}</p>
+                                                      </div>
+                                                      <p>{{$item->comment}}</p>
+                                                  </div>
+                                                
+                                                      @endforeach
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <div class="col">
+                                                            <label class="col-form-label"><span
+                                                                    class="text-danger">*</span>
+                                                                Your Name</label>
+                                                            <input type="text" class="form-control"
+                                                                value="{{ Auth::user()->name }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <div class="col">
+                                                            <label class="col-form-label"><span
+                                                                    class="text-danger">*</span>
+                                                                Your Email</label>
+                                                            <input type="email" class="form-control" required
+                                                                value=" {{ Auth::user()->email }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <div class="col">
+                                                            <label class="col-form-label"><span
+                                                                    class="text-danger">*</span>
+                                                                Your Review</label>
+                                                            <textarea class="form-control" required name="comment"></textarea>
+                                                            <div class="help-block pt-10"><span
+                                                                    class="text-danger">Note:</span>
+                                                                HTML is not translated!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="buttons">
+                                                        <button class="btn btn-sqr" type="submit">Continue</button>
+                                                    </div>
+                                                </form> <!-- end of review-form -->
+                                            </div>
+                                        @else
+                                            <div class="alert alert_danger">
+                                                <p>Đăng nhập để được bình luận và đọc những bình luận đẹp</p> click vào đây để đăng nhập <a
+                                                    href="{{ route('login') }}">Đăng nhập</a>
+                                            </div>
+                                        @endif
+
+                                        <hr>
                                         <div class="tab-pane fade show active" id="tab_one">
                                             <div class="tab-one">
                                                 <p>{!! $sanPham->mo_ta_anh !!}</p>
                                             </div>
-                                        </div>
-
-                                        <div class="tab-pane fade" id="tab_three">
-                                            <form action="#" class="review-form">
-                                                <h5>1 review for <span>Chaz Kangeroo</span></h5>
-                                                <div class="total-reviews">
-                                                    <div class="rev-avatar">
-                                                        <img src="assets/img/about/avatar.jpg" alt="">
-                                                    </div>
-                                                    <div class="review-box">
-                                                        <div class="ratings">
-                                                            <span class="good"><i class="fa fa-star"></i></span>
-                                                            <span class="good"><i class="fa fa-star"></i></span>
-                                                            <span class="good"><i class="fa fa-star"></i></span>
-                                                            <span class="good"><i class="fa fa-star"></i></span>
-                                                            <span><i class="fa fa-star"></i></span>
-                                                        </div>
-                                                        <div class="post-author">
-                                                            <p><span>admin -</span> 30 Mar, 2019</p>
-                                                        </div>
-                                                        <p>Aliquam fringilla euismod risus ac bibendum. Sed sit
-                                                            amet sem varius ante feugiat lacinia. Nunc ipsum nulla,
-                                                            vulputate ut venenatis vitae, malesuada ut mi. Quisque
-                                                            iaculis, dui congue placerat pretium, augue erat
-                                                            accumsan lacus</p>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col">
-                                                        <label class="col-form-label"><span class="text-danger">*</span>
-                                                            Your Name</label>
-                                                        <input type="text" class="form-control" required>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col">
-                                                        <label class="col-form-label"><span class="text-danger">*</span>
-                                                            Your Email</label>
-                                                        <input type="email" class="form-control" required>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col">
-                                                        <label class="col-form-label"><span class="text-danger">*</span>
-                                                            Your Review</label>
-                                                        <textarea class="form-control" required></textarea>
-                                                        <div class="help-block pt-10"><span
-                                                                class="text-danger">Note:</span>
-                                                            HTML is not translated!
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col">
-                                                        <label class="col-form-label"><span class="text-danger">*</span>
-                                                            Rating</label>
-                                                        &nbsp;&nbsp;&nbsp; Bad&nbsp;
-                                                        <input type="radio" value="1" name="rating">
-                                                        &nbsp;
-                                                        <input type="radio" value="2" name="rating">
-                                                        &nbsp;
-                                                        <input type="radio" value="3" name="rating">
-                                                        &nbsp;
-                                                        <input type="radio" value="4" name="rating">
-                                                        &nbsp;
-                                                        <input type="radio" value="5" name="rating" checked>
-                                                        &nbsp;Good
-                                                    </div>
-                                                </div>
-                                                <div class="buttons">
-                                                    <button class="btn btn-sqr" type="submit">Continue</button>
-                                                </div>
-                                            </form> <!-- end of review-form -->
                                         </div>
                                     </div>
                                 </div>
@@ -267,8 +271,8 @@
                                     <form action="{{ route('cart.addCart') }}" method="post">
                                         @csrf
                                         <input type="hidden" name="quantity" value="1">
-                                        <input type="hidden" name="product_id" value="{{$item->id}}">
-                                        <input type="hidden" name="danh_muc_id" value="{{$item->danh_muc_id }}">
+                                        <input type="hidden" name="product_id" value="{{ $item->id }}">
+                                        <input type="hidden" name="danh_muc_id" value="{{ $item->danh_muc_id }}">
                                         <div class="cart-hover">
                                             <button class="btn btn-cart2" type="submit">Add to cart</button>
                                         </div>
