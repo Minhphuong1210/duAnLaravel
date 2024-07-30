@@ -134,7 +134,13 @@
                                         </li>
 
                                         <li>
-                                            <a data-bs-toggle="tab" href="#tab_three">reviews ({{$count_comment}})</a>
+                                            <a data-bs-toggle="tab" href="#tab_three">reviews
+                                                @if (Auth::check())
+                                                    ({{ $count_comment }})
+                                                @endif
+
+
+                                            </a>
                                         </li>
                                     </ul>
                                     <div class="tab-content reviews-tab">
@@ -150,27 +156,28 @@
                                                 @endif
 
                                                 @if (session('error'))
-                                                <div class="alert alert-success">
-                                                    {{ session('error') }}
-                                                </div>
-                                            @endif
+                                                    <div class="alert alert-success">
+                                                        {{ session('error') }}
+                                                    </div>
+                                                @endif
                                                 <form action="{{ route('comment', ['san_pham_id' => $sanPham->id]) }}"
                                                     class="review-form" method="POST">
 
 
                                                     @csrf
-                                                    <h5>{{$count_comment}} review for  <span> {{ $sanPham->ten_san_pham }}</span></h5>
-                                                  <div class="total-reviews">
-                                                       
-                                                    @foreach ($comment as $item)
-                                                    <div class="review-box">
-                                                      <div class="post-author">
-                                                          <p><span>{{$item->user->name}}</span> Ngày {{$item->created_at->format('d/mY')}}</p>
-                                                      </div>
-                                                      <p>{{$item->comment}}</p>
-                                                  </div>
-                                                
-                                                      @endforeach
+                                                    <h5>{{ $count_comment }} review for <span>
+                                                            {{ $sanPham->ten_san_pham }}</span></h5>
+                                                    <div class="total-reviews">
+
+                                                        @foreach ($comment as $item)
+                                                            <div class="review-box">
+                                                                <div class="post-author">
+                                                                    <p><span>{{ $item->user->name }}</span> Ngày
+                                                                        {{ $item->created_at->format('d/mY') }}</p>
+                                                                </div>
+                                                                <p>{{ $item->comment }}</p>
+                                                            </div>
+                                                        @endforeach
                                                     </div>
                                                     <div class="form-group row">
                                                         <div class="col">
@@ -209,8 +216,8 @@
                                             </div>
                                         @else
                                             <div class="alert alert_danger">
-                                                <p>Đăng nhập để được bình luận và đọc những bình luận đẹp</p> click vào đây để đăng nhập <a
-                                                    href="{{ route('login') }}">Đăng nhập</a>
+                                                <p>Đăng nhập để được bình luận và đọc những bình luận đẹp</p> click vào đây
+                                                để đăng nhập <a href="{{ route('login') }}">Đăng nhập</a>
                                             </div>
                                         @endif
 

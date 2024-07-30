@@ -21,7 +21,7 @@
                                 <div class="col-md-12">
                                     <div class="hero-slider-content slide-1">
                                         <h2 class="slide-title">{{ $item->ten_danh_muc }} </h2>
-                                        <a href="/category/detail/{{ $item->id }}" class="btn btn-hero">Read More</a>
+                                        <a href="/category/{{ $item->id }}" class="btn btn-hero">Read More</a>
                                     </div>
                                 </div>
                             </div>

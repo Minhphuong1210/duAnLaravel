@@ -24,6 +24,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'is_active',
     ];
 
     /**
@@ -35,7 +36,6 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
     /**
      * The attributes that should be cast.
      *
@@ -44,9 +44,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password'=>'hashed',
+        'is_active' =>'boolean',
     ];
 
-    // public function comment(){
-    //     return $this->belongsto(Comment::class, 'id','');
-    // }
+    
 }

@@ -40,6 +40,11 @@
                         <span> Sản phẩm </span>
                     </a>
 
+                    <a href="{{ route('admins.nguoidungs.index') }}">
+                        <i data-feather="users"></i>
+                        <span> Người dùng </span>
+                    </a>
+
                 </li>
 
             </ul>

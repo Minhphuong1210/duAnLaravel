@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class NguoiDungController extends Controller
 {
@@ -12,7 +14,8 @@ class NguoiDungController extends Controller
      */
     public function index()
     {
-        
+        $nguoiDung = User::query()->get();
+        return view('admins.nguoidungs.index', compact('nguoiDung'));
     }
 
     /**
@@ -20,7 +23,7 @@ class NguoiDungController extends Controller
      */
     public function create()
     {
-        //
+        return view('admins.nguoidungs.create');
     }
 
     /**
@@ -28,7 +31,18 @@ class NguoiDungController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        if ($request->isMethod('POST')) {
+            // $param = $request->except('_token');
+            User::query()->create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'password' => $request->input('password'),
+                'role' => $request->input('role'),
+                'is_active' => $request->input('is_active'),
+            ]);
+        }
+        return redirect()->route('admins.nguoidungs.index')->with('success', 'thêm người dùng thành công');
     }
 
     /**
@@ -44,7 +58,8 @@ class NguoiDungController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $nguoiDung = User::query()->findOrFail($id);
+        return view('admins.nguoidungs.edit', compact('nguoiDung'));
     }
 
     /**
@@ -52,7 +67,17 @@ class NguoiDungController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // dd($request->all());
+        if ($request->isMethod('PUT')) {
+            $nguoiDung = User::query()->findOrFail($id);
+            $param = $request->except('_token', '_method');
+            if ($request->filled('password')) {
+                $param['password'] = Hash::make($request->input('password'));
+            }
+            // dd($param);
+            $nguoiDung->update($param);
+        }
+        return redirect()->route('admins.nguoidungs.index')->with('success', 'Cập nhật người dùng thành công');
     }
 
     /**
@@ -60,6 +85,8 @@ class NguoiDungController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $nguoiDung = User::query()->findOrFail($id);
+        $nguoiDung->delete();
+        return redirect()->route('admins.nguoidungs.index')->with('success', 'Xóa người dùng thành công');
     }
 }

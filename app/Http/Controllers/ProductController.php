@@ -33,8 +33,12 @@ class ProductController extends Controller
         $danhMuc = DanhMuc::query()->findOrFail($danh_muc_id);
         $sanPhamsCungDanhMuc = $danhMuc->sanPhams;
         $comment = Comment::where('san_pham_id', '=', $sanPham->id)->latest('id')->get();
+        $count_comment = 0; 
+
         foreach ($comment as $comment_count) {
-            $count_comment = $comment_count->count();
+            if ($comment_count) {
+                $count_comment += 1; 
+            }
         }
         // dd($comment);
         // dd($sanPhamsCungDanhMuc);
@@ -56,10 +60,11 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         $keyword = $request->input('keyword');
+        // dd($keyword);
         $sanPhams = SanPham::query();
         if ($keyword) {
-            $sanPhams->where('ten_san_pham', 'like', "%{$keyword}%")
-                ->orWhere('mo_ta_ngan', 'like', "%{$keyword}%");
+            $sanPhams->where('ten_san_pham', 'like', "%{$keyword}%");
+                // ->orWhere('mo_ta_ngan', 'like', "%{$keyword}%");
         }
         $sanPhams = $sanPhams->get();
         //    dd($sanPhams);
@@ -99,10 +104,10 @@ class ProductController extends Controller
             Mail::to($email)->send(new ContactEmail($email, $name, $phone, $noidung));
     
             // Chuyển hướng và thông báo thành công
-            return redirect()->route('trangChu')->with('success', 'Đã gửi mail thành công');
+            return redirect()->route('trangChu');
         } catch (\Exception $e) {
             // Xử lý lỗi nếu gửi email không thành công
-            return redirect()->route('trangChu')->with('error', 'Có lỗi xảy ra khi gửi email. Vui lòng thử lại.');
+            return redirect()->route('trangChu');
         }
     }
 

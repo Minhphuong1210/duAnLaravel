@@ -14,18 +14,23 @@ class AuthController extends Controller
     {
         return view('auth.login');
     }
- 
+
 
     public function login(Request $request)
     {
-// dd($request->all());
-       $user = $request->only('email','password');
-//    $request->password;
-    if (Auth::attempt($user)) {
-        // dd(Auth::user());
-        return redirect()->intended('/');
-    }
-        return redirect()->back()->with('Email','sai địa chỉ email');
+
+        $user = $request->only('email', 'password');
+
+
+        if (Auth::attempt($user)) {
+            $check_khoa = Auth::user();
+            if ($check_khoa->is_active == 0) {
+                Auth::logout();
+                return redirect()->back()->with('error', 'tài khoản đã bị khóa');
+            }
+            return redirect()->intended('/');
+        }
+        return redirect()->back()->with('Email', 'sai địa chỉ email');
     }
 
     public function showFormRegister(Request $request)
