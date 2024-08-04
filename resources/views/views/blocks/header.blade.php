@@ -120,10 +120,14 @@
                                             <ul class="dropdown-list">
                                                 <li><a href="{{ route('login') }}">Cập nhật:
                                                         {{ Auth::user()->name }}</a></li>
+                                                        <hr>
                                                 <form action="{{ route('logout') }}" method="post">
                                                     @csrf
                                                     <li><button type="submit">logout</button></li>
                                                 </form>
+                                                <hr>
+                                                <li><a href="{{ route('donhangs.index') }}">My Order:
+                                                    </a></li>
                                             </ul>
                                         @else
                                             <ul class="dropdown-list">
@@ -145,6 +149,7 @@
                                             <div class="notification">{{session('cart')?count(session('cart')) :'0' }}</div>
                                         </a>
                                     </li>
+                                    
                                 </ul>
                             </div>
                         </div>

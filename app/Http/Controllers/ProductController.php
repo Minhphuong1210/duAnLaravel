@@ -61,13 +61,8 @@ class ProductController extends Controller
     {
         $keyword = $request->input('keyword');
         // dd($keyword);
-        $sanPhams = SanPham::query();
-        if ($keyword) {
-            $sanPhams->where('ten_san_pham', 'like', "%{$keyword}%");
-                // ->orWhere('mo_ta_ngan', 'like', "%{$keyword}%");
-        }
-        $sanPhams = $sanPhams->get();
-        //    dd($sanPhams);
+        $sanPhams = SanPham::query()->where('ten_san_pham', 'like', "%{$keyword}%")->get();
+       
         return view('views.sanphams.search', compact('sanPhams'));
     }
 

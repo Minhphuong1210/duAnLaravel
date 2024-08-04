@@ -21,6 +21,8 @@ class User extends Authenticatable
     const ROLE_USER = 'User';
     protected $fillable = [
         'name',
+        'phone',
+        'address',
         'email',
         'password',
         'role',
@@ -47,5 +49,7 @@ class User extends Authenticatable
         'is_active' =>'boolean',
     ];
 
-    
+    public function donHang(){
+        return $this->hasMany(DonHang::class);
+    }
 }

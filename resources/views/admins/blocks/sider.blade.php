@@ -30,19 +30,23 @@
                 <li class="menu-title">Quản trị hệ thống</li>
                 <li>
                     <a href="{{ route('admins.danhmucs.index') }}">
-                        <i data-feather="users"></i>
+                        <i data-feather="folder"></i>
                         <span> Danh mục </span>
 
                     </a>
 
                     <a href="{{ route('admins.sanphams.index') }}">
-                        <i data-feather="users"></i>
+                        <i data-feather="list"></i>
                         <span> Sản phẩm </span>
                     </a>
 
                     <a href="{{ route('admins.nguoidungs.index') }}">
                         <i data-feather="users"></i>
                         <span> Người dùng </span>
+                    </a>
+                    <a href="{{ route('admins.donhangs.index') }}">
+                        <i data-feather="shopping-cart"></i>
+                        <span> Đơn hàng </span>
                     </a>
 
                 </li>

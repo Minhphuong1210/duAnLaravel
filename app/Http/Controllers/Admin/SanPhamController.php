@@ -121,7 +121,7 @@ class SanPhamController extends Controller
 
             $currentImage = $sanPham->hinhAnhSanPham->pluck('id')->toArray();
             $arrCombine = array_combine($currentImage, $currentImage);
-            // trường hợp xóa ảnh 
+            // trường hợp xóa ảnh   
             foreach ($arrCombine as $key => $value) {
                 // tìm kiếm id hình ảnh trong mảng ảnh ms đẩy lên 
                 // nếu không tồn tại id tức là người dùng đã xóa hình ảnh đó 

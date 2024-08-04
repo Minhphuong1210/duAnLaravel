@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\Admin\DanhMucController;
+use App\Http\Controllers\Admin\DonHangController;
 use App\Http\Controllers\Admin\NguoiDungController;
 use App\Http\Controllers\Admin\SanPhamController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Middleware\CheckRoleAdminMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +41,18 @@ Route::post('/update-cart', [CartController::class, 'updateCart'])->name('cart.u
 Route::get('/contact', [ProductController::class, 'contact'])->name('contact');
 Route::post('/contact',[ProductController::class, 'senMail'])->name('senMail');
 
+// order
+Route::middleware(['auth'])
+->prefix('donhangs')
+->as('donhangs.')
+->group(function(){
+Route::get('/',[OrderController::class,'index'])->name('index');
+Route::get('/create',[OrderController::class,'create'])->name('create');
+Route::post('/store',[OrderController::class,'store'])->name('store');
+Route::get('/show/{id}',[OrderController::class,'show'])->name('show');
+Route::put('{id}/update',[OrderController::class,'update'])->name('update');
+
+});
 
 // đăng nhập đăng ký
 Route::get('login', [AuthController::class, 'showFormLogin']);
@@ -89,4 +103,18 @@ Route::middleware(['auth', 'auth.admin'])
             Route::put('/{id}/update', [NguoiDungController::class, 'update'])->name('update');
             Route::delete('/{id}/destroy', [NguoiDungController::class, 'destroy'])->name('destroy');
         });
+
+        Route::prefix('donhangs')
+        ->as('donhangs.')
+        ->group(function(){
+            Route::get('/', [DonHangController::class, 'index'])->name('index');
+            Route::get('/create', [DonHangController::class, 'create'])->name('create');
+            Route::post('/store', [DonHangController::class, 'store'])->name('store');
+            Route::get('/show/{id}', [DonHangController::class, 'show'])->name('show');
+            Route::get('/{id}/edit', [DonHangController::class, 'edit'])->name('edit');
+            Route::put('/{id}/update', [DonHangController::class, 'update'])->name('update');
+            Route::delete('/{id}/destroy', [DonHangController::class, 'destroy'])->name('destroy');
+        });
     });
+
+

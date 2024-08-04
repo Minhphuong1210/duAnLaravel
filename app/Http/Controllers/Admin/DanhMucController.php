@@ -37,6 +37,7 @@ class DanhMucController extends Controller
     public function store(DanhMucRequest $request)
     {
         if ($request->isMethod('POST')) {
+            // dd($request->hinh_anh);
             $param = $request->except('_token');
             if ($request->hasFile('hinh_anh')) {
                 $filePath = $request->file('hinh_anh')->store('uploads/danhmucs', 'public');

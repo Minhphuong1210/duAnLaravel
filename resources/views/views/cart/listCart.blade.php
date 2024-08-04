@@ -28,6 +28,11 @@
     <div class="cart-main-wrapper section-padding">
         <div class="container">
             <div class="section-bg-color">
+                @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
                 <div class="row">
                     <div class="col-lg-12">
                         <form action="{{ route('cart.updateCart') }}" method="post">
@@ -66,7 +71,6 @@
                                                 <td class="pro-price">
                                                     <span>{{ number_format($item['gia'], 0, '', '.') }}</span>
                                                     <input type="hidden" name="cart[{{ $key }}][gia]"value="{{$item['gia']}}">
-
                                                 </td>
                                                 <td class="pro-quantity">
                                                     <div class="pro-qty"><input type="text" class="quantityInput"
@@ -124,7 +128,7 @@
                                     </table>
                                 </div>
                             </div>
-                            <a href="checkout.html" class="btn btn-sqr d-block">Proceed Checkout</a>
+                            <a href="{{route('donhangs.create')}}" class="btn btn-sqr d-block">Proceed Checkout</a>
                         </div>
                     </div>
                 </div>
