@@ -46,9 +46,7 @@
                                         <td>{{ $item->trang_thai_don_hang }}</td>
                                         <td>{{ number_format($item->tong_tien) }}</td>
                                         <td>
-                                            @if ($item->trang_thai_don_hang === $key_trang_thai)
-                                                <input type="text" class="w-50" value="{{ $item->trang_thai_don_hang }}" readonly>
-                                            @else
+                                         
                                                 <form action="{{ route('admins.donhangs.update', $item->id) }}" method="post">
                                                     @csrf
                                                     @method('PUT')
@@ -62,7 +60,7 @@
                                                         @endforeach
                                                     </select>
                                                 </form>
-                                            @endif
+                                         
                                         </td>
                                         <td>
                                             <a href="{{ route('admins.donhangs.show', $item->id) }}">

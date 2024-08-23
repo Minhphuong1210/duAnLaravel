@@ -12,5 +12,10 @@ class BaiViet extends Model
         'hinh_anh',
         'tieu_de',
         'noi_dung',
+        'user_id',
     ];
+    public function User(){
+        return $this->belongsTo(User::class);
+    }
 }
+

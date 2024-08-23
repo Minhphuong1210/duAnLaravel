@@ -84,7 +84,7 @@
                                                 @endforeach
                                             </ul>
                                         </li>
-                                        <li><a href="blog-left-sidebar.html">News <i class="fa fa-angle-down"></i></a>
+                                        <li><a href="{{route('allPost')}}">Về chúng tôi </a>
                                            
                                         </li>
                                         <li><a href="{{route('contact')}}">Contact us</a></li>

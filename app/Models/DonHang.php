@@ -3,10 +3,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DonHang extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     const TRANG_THAI_DON_HANG = [
         'cho_xac_nha' => 'Chờ xác nhận',
@@ -16,12 +17,12 @@ class DonHang extends Model
         'da_nhan_hang' => 'Đã nhận hàng',
         'huy_hang' => 'Hủy hàng',
     ];
-
+    
     const TRANG_THAI_THANH_TOAN = [
         'chua_thanh_toan' => 'Chưa thanh toán',
         'da_thanh_toan' => 'Đã thanh toán',
     ];
-
+    
     const CHO_XAC_NHA = 'cho_xac_nha';
     const DA_XAC_NHA = 'da_xac_nha';
     const DANG_CHUAN_BI = 'dang_chuan_bi';

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ContactEmail;
+use App\Models\BaiViet;
 use App\Models\Comment;
 use App\Models\DanhMuc;
 use App\Models\SanPham;
@@ -23,8 +24,8 @@ class ProductController extends Controller
         $sanPham_is_hot = SanPham::query()->where('is_hot', '=', 1)->limit(8)->latest('id')->get();
         $sanPham_is_show_home = SanPham::query()->where('is_show_home', '=', 1)->limit(8)->latest('id')->get();
         $comment = Comment::query()->latest('id')->limit(4)->get();
-
-        return view('views.sanphams.trangchu', compact('danhMuc', 'sanPham_is_new', 'sanPham_is_hot_deal', 'sanPham_is_hot', 'sanPham_is_show_home', 'comment'));
+        $post = BaiViet::query()->limit(5)->latest('id')->get();
+        return view('views.sanphams.trangchu', compact('danhMuc', 'sanPham_is_new', 'sanPham_is_hot_deal', 'sanPham_is_hot', 'sanPham_is_show_home', 'comment','post'));
     }
 
     public function chiTietSanPham(string $id, string $danh_muc_id)
@@ -33,11 +34,14 @@ class ProductController extends Controller
         $danhMuc = DanhMuc::query()->findOrFail($danh_muc_id);
         $sanPhamsCungDanhMuc = $danhMuc->sanPhams;
         $comment = Comment::where('san_pham_id', '=', $sanPham->id)->latest('id')->get();
-        $count_comment = 0; 
-
+        $count_comment = 0;
+        $view = $sanPham->luot_xem;
+        $view = +1;
+        $sanPham->luot_xem = $view;
+        $sanPham->save();
         foreach ($comment as $comment_count) {
             if ($comment_count) {
-                $count_comment += 1; 
+                $count_comment += 1;
             }
         }
         // dd($comment);
@@ -50,7 +54,6 @@ class ProductController extends Controller
         $danhMucTong = DanhMuc::query()->where('trang_thai', '=', '1')->get();
 
         $danhMuc = DanhMuc::query()->findOrFail($id);
-
         $sanPhamsCungDanhMuc = $danhMuc->sanPhams;
         // dd($danhMucTong);
         return view('views.sanphams.danhMuc', compact('danhMucTong', 'danhMuc', 'sanPhamsCungDanhMuc'));
@@ -62,7 +65,7 @@ class ProductController extends Controller
         $keyword = $request->input('keyword');
         // dd($keyword);
         $sanPhams = SanPham::query()->where('ten_san_pham', 'like', "%{$keyword}%")->get();
-       
+
         return view('views.sanphams.search', compact('sanPhams'));
     }
 
@@ -93,11 +96,11 @@ class ProductController extends Controller
         $name = $request->input('name');
         $phone = $request->input('phone');
         $noidung = $request->input('noidung');
-    
+
         try {
             // Gửi email
             Mail::to($email)->send(new ContactEmail($email, $name, $phone, $noidung));
-    
+
             // Chuyển hướng và thông báo thành công
             return redirect()->route('trangChu');
         } catch (\Exception $e) {

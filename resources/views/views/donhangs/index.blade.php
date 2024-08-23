@@ -62,7 +62,9 @@
                                                 </a>
                                             </td>
                                             <td>{{ $item->created_at->format('d-m-Y') }}</td>
-                                            <td>{{ $trangThaiDonHang[$item->trang_thai_don_hang] ?? 'Không xác định' }}</td>
+                                            <td>
+                                                {{ $trangThaiDonHang[$item->trang_thai_don_hang]}}
+                                            </td>
                                             <td>{{ number_format($item->tong_tien) }} đ</td>
                                             <td>
                                                 <a href="{{ route('donhangs.show', $item->id) }}" class="btn btn-sqr">
@@ -81,10 +83,12 @@
                                                 </form>
                                             </td>
                                         </tr>
+                                       
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
+                        {{$donHangs->links()}}
                         <!-- Cart Update Option -->
                     </div>
                 </div>

@@ -20,6 +20,7 @@ class CheckRoleAdminMiddleware
         if(Auth::check()&&Auth::user()->role ===User::ROLE_ADMIN){
 
             return $next($request);
+            // có thể return thế này return redirect()->route('admin.add');
         }
         abort(403);
     }

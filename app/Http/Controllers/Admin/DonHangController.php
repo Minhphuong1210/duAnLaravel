@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\DonHang;
+use App\Models\SanPham;
 use Illuminate\Http\Request;
 
 class DonHangController extends Controller
@@ -28,12 +29,13 @@ class DonHangController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-public function show(string $id){
-    $donHang = DonHang::query()->findOrFail($id);
-    $trangThaiDonHang = DonHang::TRANG_THAI_DON_HANG;
-    $trangThaiThanhToan = DonHang::TRANG_THAI_THANH_TOAN;
-    return view('admins.donhangs.show',compact('donHang', 'trangThaiDonHang', 'trangThaiThanhToan'));
-}
+    public function show(string $id)
+    {
+        $donHang = DonHang::query()->findOrFail($id);
+        $trangThaiDonHang = DonHang::TRANG_THAI_DON_HANG;
+        $trangThaiThanhToan = DonHang::TRANG_THAI_THANH_TOAN;
+        return view('admins.donhangs.show', compact('donHang', 'trangThaiDonHang', 'trangThaiThanhToan'));
+    }
 
 
 
@@ -67,13 +69,37 @@ public function show(string $id){
     public function destroy(string $id)
     {
         $donHang = DonHang::query()->findOrFail($id);
+       
+        $tongSoLuongHoanTra = 0;
+        if ($donHang->trang_thai_don_hang == DonHang::HUY_HANG) {
 
-        if ($donHang && $donHang->trang_thai_don_hang == DonHang::HUY_HANG) {
-            $donHang->chiTietDonHang->delete();
+            $donHang->chiTietDonHang()->delete();
+
+            // luồng khi xóa hàng thì nó trả lại số lượng sản phẩm 
+            $chiTietDonHangs = $donHang->chiTietDonHang;
+            foreach ($chiTietDonHangs as $chiTiet) {
+                $tongSoLuongHoanTra += $chiTiet->so_luong;
+                //2
+                $sanPhamId = $chiTiet->san_pham_id;
+                // $soLuong = $chiTiet->so_luong;
+                $sanPham = SanPham::query()->where('id', $sanPhamId)->first();
+                // dd($sanPham->so_luong);
+                if ($sanPham) {
+                    $sanPham->so_luong += $tongSoLuongHoanTra;
+                    //97=2=95
+                    $sanPham->save();
+                }
+            }
+            
+            // Xóa đơn hàng
             $donHang->delete();
+
+
             return redirect()->back()->with('success', 'Xóa thành công');
-        }else{
+
+        } else {
             return redirect()->back()->with('error', 'Không thể xóa đơn hàng');
         }
+
     }
 }

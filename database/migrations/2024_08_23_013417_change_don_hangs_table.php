@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bai_viets', function (Blueprint $table) {
-            $table->id();
-            $table->string('hinh_anh')->nullable();
-            $table->string('tieu_de');
-            $table->text('noi_dung');
-            $table->timestamps();
+        Schema::table('don_hangs', function (Blueprint $table) {
+            $table->softDeletes();
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bai_viets');
+        Schema::table('don_hangs', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 };

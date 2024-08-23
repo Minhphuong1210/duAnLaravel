@@ -17,8 +17,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $donHangs = Auth::user()->donHang;
+        $donHangs = Auth::user()->donHang()->orderBy('id', 'desc')->paginate(5);
         $trangThaiDonHang = DonHang::TRANG_THAI_DON_HANG;
+        // dd($trangThaiDonHang);
         $type_cho_xac_nhan = DonHang::CHO_XAC_NHA;
         $type_dang_van_chuyen = DonHang::DANG_VAN_CHUYEN;
         // dd($donHangs, $trangThaiDonHang, $type_cho_xac_nhan, $type_dang_van_chuyen);
@@ -56,7 +57,7 @@ class OrderController extends Controller
             try {
                 $params = $request->except('_token');
                 $params['ma_don_hang'] = $this->generateUniqueOrderCode();
-
+                $params['trang_thai_don_hang'] = DonHang::CHO_XAC_NHA;
                 $donHang = DonHang::create($params);
                 $donHangId = $donHang->id;
 

@@ -5,7 +5,7 @@
         <div id="sidebar-menu">
 
             <div class="logo-box">
-                <a class='logo logo-light' href='index.html'>
+                <a class='logo logo-light' href='{{route('admins.thongke')}}'>
                     <span class="logo-sm">
                         <img src="{{ asset('assets/admin/assets/images/logo-sm.png') }}" alt="" height="22">
                     </span>
@@ -14,7 +14,7 @@
                             height="24">
                     </span>
                 </a>
-                <a class='logo logo-dark' href='index.html'>
+                <a class='logo logo-dark' href='{{route('admins.thongke')}}'>
                     <span class="logo-sm">
                         <img src="{{ asset('assets/admin/assets/images/logo-sm.png') }}" alt="" height="22">
                     </span>
@@ -39,7 +39,10 @@
                         <i data-feather="list"></i>
                         <span> Sản phẩm </span>
                     </a>
-
+                    <a href="{{ route('admins.baiviets.index') }}">
+                        <i data-feather="list"></i>
+                        <span> bài viết </span>
+                    </a>
                     <a href="{{ route('admins.nguoidungs.index') }}">
                         <i data-feather="users"></i>
                         <span> Người dùng </span>

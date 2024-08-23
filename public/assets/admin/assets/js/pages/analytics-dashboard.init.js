@@ -262,6 +262,7 @@ var options = {
     series: [{
         name: 'Sales',
         data: [145, 96, 108, 140, 130, 150, 170, 138, 114, 128, 138]
+        // đây là dữ liệu sản phẩm
     }],
     fill: {
         opacity: 1,
