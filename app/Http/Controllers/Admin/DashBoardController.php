@@ -101,6 +101,11 @@ class DashBoardController extends Controller
             $monthlySalesData[] = $monthlyData->get($month, 0);
         }
 // dd($monthlySalesData);
+// $HuyHang = DonHang::onlyTrashed()->count();
+
+// Tính tổng số đơn hàng và số đơn hàng bị hủy cho từng sản phẩm
+
+
         return view('admins.dashboard', compact('totalProduct', 'totalOrder', 'totalPrice', 'posts_view', 'product_view', 'product_bought', 'product_not_boughts', 'jsonData','monthlySalesData'));
     }
 }

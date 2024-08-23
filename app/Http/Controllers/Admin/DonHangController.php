@@ -69,37 +69,36 @@ class DonHangController extends Controller
     public function destroy(string $id)
     {
         $donHang = DonHang::query()->findOrFail($id);
-       
-        $tongSoLuongHoanTra = 0;
+
         if ($donHang->trang_thai_don_hang == DonHang::HUY_HANG) {
 
+            // Lấy thông tin chi tiết đơn hàng trước khi xóa
+            $chiTietDonHangs = $donHang->chiTietDonHang;
+
+            // Xóa các chi tiết đơn hàng
             $donHang->chiTietDonHang()->delete();
 
-            // luồng khi xóa hàng thì nó trả lại số lượng sản phẩm 
-            $chiTietDonHangs = $donHang->chiTietDonHang;
+            // Lặp qua từng chi tiết đơn hàng để trả lại số lượng về kho của sản phẩm
             foreach ($chiTietDonHangs as $chiTiet) {
-                $tongSoLuongHoanTra += $chiTiet->so_luong;
-                //2
                 $sanPhamId = $chiTiet->san_pham_id;
-                // $soLuong = $chiTiet->so_luong;
+                $soLuongHoanTra = $chiTiet->so_luong;
+
+                // Tìm sản phẩm và cập nhật số lượng trong kho
                 $sanPham = SanPham::query()->where('id', $sanPhamId)->first();
-                // dd($sanPham->so_luong);
                 if ($sanPham) {
-                    $sanPham->so_luong += $tongSoLuongHoanTra;
-                    //97=2=95
+                    $sanPham->so_luong += $soLuongHoanTra;
                     $sanPham->save();
                 }
             }
-            
+
             // Xóa đơn hàng
             $donHang->delete();
-
 
             return redirect()->back()->with('success', 'Xóa thành công');
 
         } else {
             return redirect()->back()->with('error', 'Không thể xóa đơn hàng');
         }
-
     }
+
 }

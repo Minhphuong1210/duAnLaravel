@@ -368,7 +368,7 @@
                                     <div class="border border-dark rounded-2 me-2 widget-icons-sections">
                                         <i data-feather="table" class="widgets-icons"></i>
                                     </div>
-                                    <h5 class="card-title mb-0">Top 5 Sản phẩm chưa được mua</h5>
+                                    <h5 class="card-title mb-0">Top 5 Sản phẩm có tỷ lệ hủy hàng nhiều nhất</h5>
                                 </div>
                             </div>
 
@@ -383,9 +383,7 @@
                                                     <th>Mã sản phẩm</th>
                                                     <th>Hình ảnh sản phẩm</th>
                                                     <th>Giá sản phẩm</th>
-                                                    <th>Tổng sản phẩm bán</th>
-                                                    <th>Tổng giá tiền</th>
-
+                                                    <th>Tỉ lệ hủy đơn</th>
                                                 </tr>
                                             </thead>
 
