@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\BaiVietController;
 use App\Http\Controllers\Admin\DanhMucController;
 use App\Http\Controllers\Admin\DashBoardController;
 use App\Http\Controllers\Admin\DonHangController;
+use App\Http\Controllers\Admin\KhuyenMaiController;
 use App\Http\Controllers\Admin\NguoiDungController;
 use App\Http\Controllers\Admin\SanPhamController;
 use App\Http\Controllers\AuthController;
@@ -46,6 +47,9 @@ Route::post('/contact', [ProductController::class, 'senMail'])->name('senMail');
 //bài viết 
 Route::get('/post', [PostController::class, 'allPost'])->name('allPost');
 Route::get('/{id}/detail', [PostController::class, 'detail'])->name('post.detail');
+// mã khuyến mãi
+Route::post('/list-cart', [CartController::class, 'PromotionCart'])->name('Promotion');
+
 
 // order
 Route::middleware(['auth'])
@@ -134,7 +138,16 @@ Route::middleware(['auth', 'auth.admin'])
             ->group(function () {
                 Route::post('/searchOfWeek', [DashBoardController::class, 'thongKe'])->name('thongKe');
                 Route::post('/searchOfYear', [DashBoardController::class, 'thongKe'])->name('searchOfYear');
-
+            });
+        Route::prefix('khuyenmais')
+            ->as('khuyenmais.')
+            ->group(function () {
+                Route::get('/', [KhuyenMaiController::class, 'index'])->name('index');
+                Route::get('/create', [KhuyenMaiController::class, 'create'])->name('create');
+                Route::post('/store', [KhuyenMaiController::class, 'store'])->name('store');
+                Route::get('/{id}/edit', [KhuyenMaiController::class, 'edit'])->name('edit');
+                Route::put('/{id}/update', [KhuyenMaiController::class, 'update'])->name('update');
+                Route::delete('/{id}/destroy', [KhuyenMaiController::class, 'destroy'])->name('destroy');
             });
     });
 

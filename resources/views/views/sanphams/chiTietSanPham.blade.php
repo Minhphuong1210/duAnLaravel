@@ -162,8 +162,6 @@
                                                 @endif
                                                 <form action="{{ route('comment', ['san_pham_id' => $sanPham->id]) }}"
                                                     class="review-form" method="POST">
-
-
                                                     @csrf
                                                     <h5>{{ $count_comment }} review for <span>
                                                             {{ $sanPham->ten_san_pham }}</span></h5>

@@ -51,7 +51,11 @@
                         <i data-feather="shopping-cart"></i>
                         <span> Đơn hàng </span>
                     </a>
+                    <a href="{{ route('admins.khuyenmais.index') }}">
+                        <i data-feather="folder"></i>
+                        <span> Khuyến mại </span>
 
+                    </a>
                 </li>
 
             </ul>

@@ -17,12 +17,12 @@ class DonHang extends Model
         'da_nhan_hang' => 'Đã nhận hàng',
         'huy_hang' => 'Hủy hàng',
     ];
-    
+
     const TRANG_THAI_THANH_TOAN = [
         'chua_thanh_toan' => 'Chưa thanh toán',
         'da_thanh_toan' => 'Đã thanh toán',
     ];
-    
+
     const CHO_XAC_NHA = 'cho_xac_nha';
     const DA_XAC_NHA = 'da_xac_nha';
     const DANG_CHUAN_BI = 'dang_chuan_bi';
@@ -45,6 +45,8 @@ class DonHang extends Model
         'tien_hang',
         'tien_ship',
         'tong_tien',
+        'shipping_id',
+        'promotion_id',
     ];
 
     public function user()

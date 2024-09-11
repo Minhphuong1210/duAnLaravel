@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\OrderConfirm;
 use App\Models\DonHang;
+use App\Models\Promotions;
 use App\Models\SanPham;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,18 +32,32 @@ class OrderController extends Controller
      */
     public function create()
     {
+        session()->forget('Promotion_code');
+        $DISCOUNT_Percentage = Promotions::DISCOUNT_Percentage;
         $cart = session()->get('cart', []);
+        // dd($cart);
         if (!empty($cart)) {
             $total = 0;
             $subTotal = 0;
+            $Promotion_code = 0;
             foreach ($cart as $item) {
                 $subTotal += $item['gia'] * $item['so_luong'];
+                $promotion_id = $item['promotion_id'];
+            }
+            $promotion = Promotions::query()->findOrFail($promotion_id);
+            // dd($promotion_id);
+            if ($promotion) {
+                if ($promotion['discount_type'] == $DISCOUNT_Percentage) {
+                    $Promotion_code = $subTotal * $promotion['discount'] / 100;
+                } else {
+                    $Promotion_code = $promotion['discount'];
+                }
 
             }
             $shipping = 30000;
-            $total = $subTotal + $shipping;
+            $total = $subTotal + $shipping - $Promotion_code;
         }
-        return view('views.donhangs.create', compact('cart', 'subTotal', 'shipping', 'total'));
+        return view('views.donhangs.create', compact('cart', 'subTotal', 'Promotion_code', 'promotion_id', 'shipping', 'total'));
     }
 
     /**
@@ -60,7 +75,7 @@ class OrderController extends Controller
                 $params['trang_thai_don_hang'] = DonHang::CHO_XAC_NHA;
                 $donHang = DonHang::create($params);
                 $donHangId = $donHang->id;
-
+                $promotion_id = $donHang->promotion_id;
                 $carts = session()->get('cart', []);
                 foreach ($carts as $key => $item) {
                     $thanhTien = $item['gia'] * $item['so_luong'];
@@ -70,12 +85,18 @@ class OrderController extends Controller
                         'don_gia' => $item['gia'],
                         'so_luong' => $item['so_luong'],
                         'thanh_tien' => $thanhTien,
+                        'promotion_id' => $donHang->promotion_id,
                     ]);
                     // sau khi mua thành công thì đã trừ đi bớt sp ở sản phẩm
                     $sanPham = SanPham::query()->find($key);
                     if ($sanPham) {
                         $sanPham->so_luong -= $item['so_luong'];
                         $sanPham->save();
+                    }
+                    $Promotions = Promotions::query()->find($promotion_id);
+                    if ($Promotions) {
+                        $Promotions->usage_limit -= 1;
+                        $Promotions->save();
                     }
                 }
 

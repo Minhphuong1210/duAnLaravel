@@ -62,6 +62,8 @@
                 </div>
             </div>
         </div>
-    @endsection
-    @section('js')
-    @endsection
+    </div>
+@endsection
+
+@section('js')
+@endsection
