@@ -15,6 +15,7 @@ class ChiTietDonHang extends Model
         'thanh_tien',
         'san_pham_id',
         'don_hang_id',
+        'promotion_id',
     ];
 public function donHang(){
     return $this->belongsTo(DonHang::class);

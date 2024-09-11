@@ -89,6 +89,7 @@
                                                                 × {{ $item['so_luong'] }}</strong></a>
                                                     </td>
                                                     <td>{{ numBer_format($item['gia'] * $item['so_luong']) }} đ</td>
+                                                    <td><input type="hidden" name="promotion_id" value="{{$promotion_id}}"></td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -97,6 +98,11 @@
                                                 <td>Sub Total</td>
                                                 <td><strong>{{ numBer_format($subTotal) }} đ</strong></td>
                                                 <input type="hidden" name="tien_hang" value="{{ $subTotal }}">
+                                            </tr>
+                                            <tr>
+                                                <td>Tiền Khuyến mại nếu có</td>
+                                                <td><strong>{{numBer_format($Promotion_code) }} đ</strong></td>
+                                                <input type="hidden" name="" value="{{ $Promotion_code }}">
                                             </tr>
                                             <tr>
                                                 <td>Shipping</td>
