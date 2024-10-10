@@ -3,7 +3,7 @@
     Giỏ hàng
 @endsection
 @section('content')
-    <!-- breadcrumb area start -->
+        <!-- breadcrumb area start -->
     <div class="breadcrumb-area">
         <div class="container">
             <div class="row">
@@ -39,12 +39,6 @@
                         {{ session('success') }}
                     </div>
                 @endif
-
-                {{-- @if (session('error'))
-                    <script>
-                        alert('{{ session('error') }}');
-                    </script>
-                @endif --}}
                 <div class="row">
                     <div class="col-lg-12">
                         <form action="{{ route('cart.updateCart') }}" method="post">
@@ -120,13 +114,17 @@
                             </div>
                         </form>
                         <div class="apply-coupon-wrapper">
-                            <form id="couponForm" action="{{ route('Promotion') }}" method="post"
-                                class="d-block d-md-flex">
-                                @csrf
-                                <input type="text" placeholder="Enter Your Coupon Code" name="code" />
-                                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                                <button class="btn btn-sqr" type="submit">Apply Coupon</button>
-                            </form>
+                          @if (Auth::check())
+                          <form id="couponForm" action="{{ route('Promotion') }}" method="post"
+                          class="d-block d-md-flex">
+                          @csrf
+                          <input type="text" placeholder="Enter Your Coupon Code" name="code" />
+                          <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                          <button class="btn btn-sqr" type="submit">Apply Coupon</button>
+                      </form>
+                          @else
+                              bạn cần đăng nhập để sử dụng mã khuyến mại
+                          @endif
                         </div>
                     </div>
                 </div>
