@@ -52,7 +52,6 @@ class ProductController extends Controller
     public function cate(string $id)
     {
         $danhMucTong = DanhMuc::query()->where('trang_thai', '=', '1')->get();
-
         $danhMuc = DanhMuc::query()->findOrFail($id);
         $sanPhamsCungDanhMuc = $danhMuc->sanPhams;
         // dd($danhMucTong);
@@ -91,7 +90,7 @@ class ProductController extends Controller
     }
     public function senMail(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $email = $request->input('email');
         $name = $request->input('name');
         $phone = $request->input('phone');

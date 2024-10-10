@@ -12,12 +12,6 @@ class CartController extends Controller
 {
     public function listCart()
     {
-
-        // $DISCOUNT_Percentage = Promotions::DISCOUNT_Percentage;
-        // $DISCOUNT_Fixed = Promotions::DISCOUNT_Fixed;
-
-        // Lấy giỏ hàng từ session
-        // session()->put('cart', []);
         $cart = session()->get('cart', []);
         $total = 0;
         $Promotion_code = 0;
@@ -142,7 +136,7 @@ class CartController extends Controller
         $sanPham = SanPham::query()->findOrFail($product_id);
         // khởi tạo 1 mảng chứa thông tin giỏ hàng trên session 
         $cart = session()->get('cart', []);
-        if (isset($cart[$product_id])) {
+        if (isset($cart[$product_id])){
             // sản phẩm đã có trong giỏ hàng 
             $cart[$product_id]['so_luong'] += $quantity;
         } else {
